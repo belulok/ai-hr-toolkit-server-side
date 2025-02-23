@@ -1,4 +1,5 @@
 import json
+import os
 from flask import Flask, request, jsonify
 import psycopg2
 from psycopg2.extras import RealDictCursor, Json
@@ -27,11 +28,11 @@ tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-mpnet-base-
 model = AutoModel.from_pretrained("sentence-transformers/all-mpnet-base-v2")
 
 DB_CONFIG = {
-    "dbname": "ai_hr_toolkit",
-    "user": "ai_hr_user",
-    "password": "123456",
-    "host": "127.0.0.1",
-    "port": 5432
+    "dbname": os.environ.get("DB_NAME"),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD"),
+    "host": os.environ.get("DB_HOST"),
+    "port": os.environ.get("DB_PORT"),
 }
 
 def get_connection():
