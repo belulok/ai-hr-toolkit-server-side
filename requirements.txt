@@ -1,0 +1,14 @@
+Flask==2.2.5
+flask-cors==3.0.10
+scikit-learn==1.2.2
+sentence-transformers==2.2.2
+huggingface-hub==0.10.1
+torch==2.0.1
+nltk==3.8
+textblob==0.17.1
+psycopg2-binary==2.9.6
+numpy==1.24.3
+pdfplumber==0.9.0     # if parsing PDFs
+spacy==3.5.1
+spacy-transformers==1.2.3
+beautifulsoup4==4.13.3
