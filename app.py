@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 from parse_utils import parse_resume_spacy, extract_skills_from_text
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 load_dotenv() 
 # 1) Set your OpenAI API key from environment variable or direct
