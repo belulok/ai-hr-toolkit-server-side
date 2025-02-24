@@ -13,7 +13,6 @@ import requests
 from bs4 import BeautifulSoup
 import openai
 from dotenv import load_dotenv
-from urllib.parse import urlparse
 
 
 from parse_utils import parse_resume_spacy, extract_skills_from_text
@@ -30,16 +29,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-mpnet-base-v2")
 model = AutoModel.from_pretrained("sentence-transformers/all-mpnet-base-v2")
 
-DATABASE_URL = os.getenv("DATABASE_URL")  # Provided by Render
-
-result = urlparse(DATABASE_URL)
-
 DB_CONFIG = {
-    "dbname": result.path[1:],      # path typically starts with '/'
-    "user": result.username,
-    "password": result.password,
-    "host": result.hostname,
-    "port": result.port
+    "dbname": "ai_hr_toolkit",
+    "user": "ai_hr_user",
+    "password": "123456",
+    "host": "127.0.0.1",
+    "port": 5432
 }
 
 def get_connection():
@@ -450,5 +445,4 @@ def match_resumes(job_id):
     return jsonify({"matches": results[:5]})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5001))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True, port=5001)
