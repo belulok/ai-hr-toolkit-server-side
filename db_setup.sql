@@ -1,26 +1,25 @@
--- If you haven't created the database and user yet, do that inside psql:
--- CREATE DATABASE ai_hr_toolkit;
--- CREATE USER ai_hr_user WITH ENCRYPTED PASSWORD 'mypassword';
--- GRANT ALL PRIVILEGES ON DATABASE ai_hr_toolkit TO ai_hr_user;
+-- db_setup.sql
 
--- Now, connect to the DB (psql -U ai_hr_user -d ai_hr_toolkit), then run:
--- \i db_setup.sql
+-- 1) Enable the pgvector extension (for 'vector' type) if not already
+CREATE EXTENSION IF NOT EXISTS vector;
 
--- OPTIONAL: If you want pgvector:
--- CREATE EXTENSION IF NOT EXISTS vector;
-
--- For a 768-dimensional model (e.g., all-mpnet-base-v2):
+-- 2) Create resumes table
 CREATE TABLE IF NOT EXISTS resumes (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255),
-    raw_text TEXT,
-    embedding VECTOR(768)
+  id               SERIAL PRIMARY KEY,
+  name             VARCHAR(255),
+  email            VARCHAR(255),
+  raw_text         TEXT,
+  embedding        VECTOR(768),
+  extracted_skills JSONB,
+  parsed_data      JSONB
 );
 
+-- 3) Create job_descriptions table
 CREATE TABLE IF NOT EXISTS job_descriptions (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    description TEXT,
-    embedding VECTOR(768)
+  id              SERIAL PRIMARY KEY,
+  title           VARCHAR(255),
+  description     TEXT,
+  embedding       VECTOR(768),
+  required_skills JSONB,
+  structured_data JSONB
 );
